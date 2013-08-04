@@ -127,8 +127,8 @@ define PassiveStem [
 
 define AntipassiveStem [
         RTV "+ap":{-On}  
-    |   [DTVBase .o. ~[?* {la7}]] "+pass":{-n}  
-    |   [DTVBase .o.  [?* {la7}]] "+pass":{-on}  
+    |   [DTVBase .o. ~[?* {la7}]] "+ap":{-n}  
+    |   [DTVBase .o.  [?* {la7}]] "+ap":{-on}  
 ];
 
 
@@ -143,27 +143,27 @@ define IVStem [
 define DTVStem [ DTVBase ];
 
 define VIIX [
-        IVStem "+ss":{-ik#} 
+        IVStem "+ss":{-ik} %# 
     |   IVStem 
 ];
 
 define VIDX [
-        IVStem "+ss":{-oq#}
+        IVStem "+ss":{-oq} %#
     |   [IVStem .o. [?* V]] "+ss":{-oqa}
     |   [IVStem .o. [?* C]] "+ss":{-a} 
 ];
 
 define VTIX [
-        RTV "+ss":{-Oh#}
+        RTV "+ss":{-Oh} %#
     |   RTV
-    |   [DTVStem .o. ~[?* "7"]] ["+ss":{-Vj#} | "+ss":{-j}]
+    |   [DTVStem .o. ~[?* "7"]] ["+ss":{-Vj} %# | "+ss":{-j}]
     |   [DTVStem .o.  [?* "7"]]
 ];
 
 define VTDX [
-        RTV "+ss":{-A7#}
+        RTV "+ss":{-A7} %#
     |   RTV "+ss":{-A}
-    |   [DTVStem .o. ~[?* "7"]] ["+ss":{-Vj#} | "+ss":{-j}]
+    |   [DTVStem .o. ~[?* "7"]] ["+ss":{-Vj} %# | "+ss":{-j}]
     |   [DTVStem .o.  [?* "7"]]
 ];
 

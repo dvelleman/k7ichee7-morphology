@@ -133,7 +133,7 @@ pop
 
 define AnalysisLookup Analyze.i;
 
-define Segment [AnalysisLookup .o. Input .o. CanonicalVowelLoss .o. VowelHarmony .o. ConsonantHarmony .o ["R"->0] .o. ["7"->"'"]].i;
+define Segment [AnalysisLookup .o. Input .o. CanonicalVowelLoss .o. VowelHarmony .o. ConsonantHarmony .o. ["R"->0] .o. ["7"->"'"]].i;
 
 regex Segment;
 save stack segment.bin
