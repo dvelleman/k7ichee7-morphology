@@ -1,0 +1,186 @@
+define S ["-"|":"];
+define V [ a | e | i | o | u | ä | ë | ï | ö | ü | ā | ē | ī | ō | ū ];
+define X [ "A" | "O" | "V" ];
+define C [ {b'} | {ch} | {ch'} | h | j | k | {k'} | l | m | n | p | q | {q'} | r | s
+                | t | {t'} | {tz} | {tz'} | w | x | y | 7 ];
+
+
+
+define RTV [
+        "make":{b'an}
+    |   "bury":{muq}
+    |   "see":{il}
+];
+
+define DTV [
+        "cure":{kuna}
+    |   "carry":{eqa}
+];
+
+define IV [
+        "enter":{ok}
+    |   "walk":{b'iin}
+];
+
+define N1 [
+        "avocado":{ooj}
+];
+
+define NX [ 
+        "house":{jah}
+];
+
+define B [  
+        "b1s+":{in-}
+    |   "b2s+":{at-}
+    |   "b3s+":{R-} 
+    |   "b1p+":{oj-}
+    |   "b2p+":{ix-}
+    |   "b3p+":{e7-}
+];
+
+define M [ "go+" | "come+" ];
+
+define A [ "a1s+" | "a2s+" | "a3s+" | "a1p+" | "a2p+" | "a3p+" ];
+
+define Indicative [ "inc+" | "cpl+" | "n.imp+" | "dep+" ];
+
+define Subjunctive [ "imp+" ];
+
+define makeR [
+        [{R-} -> 0          || _ [M|"a1s+"] ]
+];
+
+define makeVerbalSetA [
+        ["a1s+" -> {en-}    // "go+" _ C ]
+    .o. ["a1s+" -> {enw-}   // "go+" _ V ]
+    .o. ["a1s+" -> {inw-}   || _ V ]
+    .o. ["a1s+" -> {nu-}    // "come+" _ ]
+    .o. ["a1s+" -> {in-}    || _ C ] 
+    .o. ["a2s+" -> {a-}     || _ C ]
+    .o. ["a2s+" -> {a-}     || _ C ]
+    .o. ["a2s+" -> {aw-}    || _ V ]
+    .o. ["a3s+" -> {u-}     || _ C ]
+    .o. ["a3s+" -> {r-}     || _ V ] 
+    .o. ["a1p+" -> {qa-}    || _ C ]
+    .o. ["a1p+" -> {q-}     || _ V ] 
+    .o. ["a2p+" -> {i-}     || _ C ]
+    .o. ["a2p+" -> {iw-}    || _ V ] 
+    .o. ["a3p+" -> {ki-}    || _ C ]
+    .o. ["a3p+" -> {k-}     || _ V ] 
+];
+
+define makeNominalSetA [
+        ["a1s+" -> {w-}     || _ V ]
+    .o. ["a1s+" -> {nu-}    || _ C ]
+    .o. makeVerbalSetA
+];
+
+define makeMovement [
+        ["go+"  -> {e7-}    ]
+    .o. ["come+"-> {ul-}    ]
+];
+
+define makeTAM [
+        ["imp+" (->) "dep+" ] .o. ["imp+" -> "inc+" ]
+    .o. ["inc+" -> {ka-}    || _ [%0|%-|%R]* C ]
+    .o. ["inc+" -> {k-}     || _ [%0|%-|%R]* V ]
+    .o. ["n.imp+" -> {ma-}  || _ [%0|%-|%R]* C ]
+    .o. ["n.imp+" -> {m-}   || _ [%0|%-|%R]* V ]
+    .o. ["mov.imp+" -> {ja-}|| _ [%0|%-|%R]* C ]
+    .o. ["mov.imp+" -> {j-} || _ [%0|%-|%R]* V ]
+    .o. ["dep+" -> {cha-}   || _ [%0|%-|%R]* C ]
+    .o. ["dep+" -> {ch-}    || _ [%0|%-|%R]* V ]
+    .o. ["cpl+" -> {x-}     ]
+];
+
+
+
+define IVBase [
+        IV
+    |   [RTV|DTV] "+cp":{-(V)taj}
+];
+
+define DTVBase [
+        DTV
+    |   [RTV|DTV|IVBase] "+caus":{-(i)sa}
+    |   [RTV|DTV|IVBase] "+instr":{-(i)b'e}
+];
+
+define IVStem [
+        RTV "+pass":{-L} 
+    |   RTV "+ap":{-On}  
+    |   RTV "+af":{-Ow} 
+    |   DTVBase "+pass":{-x}  
+    |   DTVBase "+ap":{-n}
+    |   DTVBase "+af":{-n}
+    |   IV 
+];
+
+define DTVStem [ DTVBase ];
+
+define VIIX [
+        IVStem "+ss":{-ik#} 
+    |   IVStem 
+];
+
+define VIDX [
+        IVStem "+ss":{-oq#}
+    |   [IVStem .o. [?* V]] "+ss":{-oqa}
+    |   [IVStem .o. [?* C]] "+ss":{-a} 
+];
+
+define VTIX [
+        RTV "+ss":{-Oh#}
+    |   RTV
+    |   DTVStem "+ss":{-:j#}
+    |   DTVStem "+ss":{-j}
+];
+
+define VTDX [
+        RTV "+ss":{-A7#}
+    |   RTV "+ss":{-A}
+    |   DTVStem "+ss":{-:j#}
+    |   DTVStem "+ss":{-j}
+];
+
+define TV [
+        Indicative      B   A VTIX
+    |   Subjunctive     B   A VTDX
+    |   Indicative      B M A VTDX
+    |   "mov.imp+":{j-} B M A VTDX 
+] .o. makeR .o. makeVerbalSetA .o. makeMovement .o. makeTAM;
+
+define IV [
+        Indicative      B     VIIX
+    |   Subjunctive     B     VIDX
+    |   Indicative      B M   VIDX
+    |   "mov.imp+":{j-} B M   VIDX 
+] .o. makeR .o. makeMovement .o. makeTAM;
+
+define N1Stem [
+        N1
+    |   RTV     "+perf":{-OOm}
+    |   DTVStem "+perf":{-:m}
+];
+
+define N1aStem [
+        IVStem "+nmlzr":{-ik}
+];
+
+define NXStem [
+        NX
+    |   [~$["+pass"] .o. IVStem] "+perf":{-(i)naq}
+];
+
+define Noun [
+        (A) N1Stem                  ("#") 
+    |    A  N1aStem "+poss":{-L}    ("#")
+    |       N1aStem                 ("#")
+    |       NXStem                  ("#")
+] .o. makeNominalSetA;
+
+define Word [TV | IV | Noun];
+
+regex Word;
+save stack lex.bin

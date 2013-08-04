@@ -1,0 +1,169 @@
+define S ["-"|":"];
+define V [ a | e | i | o | u | ä | ë | ï | ö | ü | ā | ē | ī | ō | ū ];
+define X [ "A" | "O" | "V" ];
+define C [ {b'} | {ch} | {ch'} | h | j | k | {k'} | l | m | n | p | q | {q'} | r | s
+                | t | {t'} | {tz} | {tz'} | w | x | y | 7 ];
+
+
+define VowelLoss [
+            [ %( [V|X] %)  ->   0  || V S* _ ]
+        .o. [ %( [V|X] %) (->)  0 ] 
+        .o. [ %( -> 0 ] 
+        .o. [ %) -> 0 ]
+];
+
+define VowelHarmony [
+	[ "A" -> u || u \V* _ 	] .o.
+	[ "A" -> o || o \V* _ 	] .o.
+	[ "A" -> a 		] .o.
+	[ "O" -> u || u \V* _	] .o.
+	[ "O" -> o		] .o.
+	[ "V" -> u || u \V* _	] .o.
+	[ "V" -> o || o \V* _	] .o.
+	[ "V" -> a || a \V* _	] .o.
+	[ "V" -> e || e \V* _	] .o.
+	[ "V" -> i || i \V* _	] .o.
+	[ "h" -> "w" || [o|u] S* _ S* V     ] .o.
+	[ "h" -> "y" || V     S* _ S* V     ] .o.
+        [ %< V %> -> 0 ]
+];
+
+define ConsonantHarmony [
+	[ "C1" -> {b'} || {b'} V C "-" V _ ].o.
+	[ "C1" -> {ch'} || {ch'} V C "-" V _ ].o.
+	[ "C1" -> {ch} || {ch} V C "-" V _ ].o.
+	[ "C1" -> {j} || {j} V C "-" V _ ].o.
+	[ "C1" -> {k'} || {k'} V C "-" V _ ].o.
+	[ "C1" -> {k} || {k} V C "-" V _ ].o.
+	[ "C1" -> {l} || {l} V C "-" V _ ].o.
+	[ "C1" -> {m} || {m} V C "-" V _ ].o.
+	[ "C1" -> {n} || {n} V C "-" V _ ].o.
+	[ "C1" -> {p} || {p} V C "-" V _ ].o.
+	[ "C1" -> {q'} || {q'} V C "-" V _ ].o.
+	[ "C1" -> {q} || {q} V C "-" V _ ].o.
+	[ "C1" -> {r} || {r} V C "-" V _ ].o.
+	[ "C1" -> {s} || {s} V C "-" V _ ].o.
+	[ "C1" -> {tz'} || {tz'} V C "-" V _ ].o.
+	[ "C1" -> {tz} || {tz} V C "-" V _ ].o.
+	[ "C1" -> {t'} || {t'} V C "-" V _ ].o.
+	[ "C1" -> {t} || {t} V C "-" V _ ].o.
+	[ "C1" -> {w} || {w} V C "-" V _ ].o.
+	[ "C1" -> {x} || {x} V C "-" V _ ].o.
+	[ "C1" -> {y} || {y} V C "-" V _ ]
+];
+
+
+define VowelLength [
+	[	a a -> ā,
+		e e -> ē,
+		i i -> ī,
+		o o -> ō,
+		u u -> ū  || _ \V* "#" ] .o.
+	[ 	a h -> ā,
+		e h -> ē,
+		i h -> ī,
+		o h -> ō,
+		u h -> ū ] .o. # /h/ gives long vowels unaffected by
+					# shortening
+	[ a -> ā, e -> ē, i -> ī, o -> ō, u -> ū || _ \V* L ] .o. [L -> 0] .o.
+	[ a -> ā, e -> ē, i -> ī, o -> ō, u -> ū || R "-" _ ] .o. [R -> 0] .o.
+					# So does morphological vowel length
+	[	a 7 -> ä,
+		e 7 -> ë,
+		i 7 -> ï,
+		o 7 -> ö,
+		u 7 -> ü  ] .o.
+	[ 	a a -> a,
+		e e -> e,
+		i i -> i,
+		o o -> o,
+		u u -> u  ]
+];
+
+
+# TODO: This is not quite right.  We need to get straight about when contraction
+#	occurs in word-final syllables and when it doesn't.
+#	The correct pattern for Misal-style K'iche' *might* be:
+#		- Don't contract with a long stressed vowel.
+#		- The SSes -oh/-uh, -a’/-o’/-u’ and -a/-o/-u count as long
+#
+#	NB 	xinwiye'eej does not contract but *xinwiye'ej does
+#		q'a'aam doesn't contract
+#		wa'iim doesn't contract
+#		*ya'om contracts to yo'm	(what does ya'oom do?)
+#		ya'ooj doesn't contract, but *ya'oj -> yo'j
+
+define VowelContraction [
+	[ [..] <-> "|" || _ V \V* "#" ] .o.      # Separate off the stressed vowel
+        [ [V [S|V]* V] @-> %< ... %> ] .o. 	# Capture seqs that could contract.
+     	[ a -> ä, e -> ë, i -> ï, o -> ö, u -> ü,
+	  ā -> ä, ē -> ë, ī -> ï, ō -> ö, ū -> ü 
+			|| _ %> ] .o.            # Insert a glottal if needed
+        [ [S|V]* @-> 0 || %< _ V %>] .o.  # Do contraction.
+        ~$[%< V \%>* V %>]  .o.                # Filter out seqs that could have
+                                                # contracted but didn't.
+        [ %< -> 0, %> -> 0 ]                    # Remove brackets.
+] .o. ~$":" .o.
+	[ ā -> a h, ē -> e h, ī -> i h, ō -> o h, ū -> u h || _ "#" ] .o.
+	[ ā -> a a, ē -> e e, ī -> i i, ō -> o o, ū -> u u] .o.
+	[ ä -> a ', ë -> e ', ï -> i ', ö -> o ', ü -> u '] .o.
+	[ "|" -> 0 ] .o.
+	[ "#" -> 0 ];
+
+define Unhyphenate [ "-" -> 0];
+
+load stack lex.bin
+define Input;
+regex [Input .o. VowelLoss .o. VowelHarmony .o. ConsonantHarmony .o. VowelLength .o. VowelContraction .o. Unhyphenate];
+save stack phonology.bin
+
+#define CleanTopSide [0 <- "(" ?* ")" ] .o. [0 <- "|"] .o. [0 <- "|a0|"] .o. [0 <- "|b0|"] .o. [0 <- "#"];
+
+#define Variation [ [ " " -> {*} ] .o.
+#		   [ V (->) "*" || C "*"* _ "*"* C ] .o.
+#		   [ ’ (->) "*" || V "*"* _   ] .o.
+#		   [ V (->) "*" || V "*"* _   ] .o.
+#		   [ h (->) "*"   || _ "*"* .#. ] .o.
+#		   [ ’ (->) {**b’} || V "*"* _ "*"* V ] .o.
+#		   [ V (->) {V**} ] 
+#		];
+
+#define Viol ${*};
+#define Viol0 ~Viol;
+#define Viol1 ~[Viol^2];
+#define Viol2 ~[Viol^3];
+#define Viol3 ~[Viol^4];
+#define Viol4 ~[Viol^5];
+#define Viol5 ~[Viol^6];
+#define Viol6 ~[Viol^7];
+#define Viol7 ~[Viol^8];
+#define Viol8 ~[Viol^9];
+#define Viol9 ~[Viol^10];
+#define Pardon "*" -> 0;
+
+#define Analyze CleanTopSide .o. Words .o. Phonology .o. Unhyphenate .o. Variation;
+#regex Analyze;
+#save stack analyze.bin
+#pop
+
+#define MorphSegment  [" " <-> "@"] .o. Phonology.i .o. ["@" <-> " "] .o. Words.l .o. [[..] -> "#" || _ ".#."] .o. Phonology .o. Unhyphenate;
+
+
+#define WSGen [Unhyphenate.i .o. MorphSegment .o. Variation];
+
+#define WordSegment [WSGen .o. Viol0 .o. Pardon] .p.
+#		   [WSGen .o. Viol1 .o. Pardon] .p.
+#		   [WSGen .o. Viol2 .o. Pardon] .p.
+#%		   [WSGen .o. Viol3 .o. Pardon] .p.
+#		   [WSGen .o. Viol4 .o. Pardon] .p.
+#		   [WSGen .o. Viol5 .o. Pardon] .p.
+#		   [WSGen .o. Viol6 .o. Pardon] .p.
+#		   [WSGen .o. Viol7 .o. Pardon] .p.
+#		   [WSGen .o. Viol8 .o. Pardon] .p.
+#		   [WSGen .o. Viol9 .o. Pardon];
+#
+#regex WordSegment;
+#save stack wordsegment.bin
+#pop
+#regex MorphSegment;
+#save stack morphsegment.bin
