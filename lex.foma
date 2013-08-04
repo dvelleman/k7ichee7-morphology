@@ -19,7 +19,7 @@ define DTV [
 
 define IV [
         "enter":{ok}
-    |   "walk":{b'iin}
+    |   "walk":{b'ihn}
 ];
 
 define N1 [
@@ -174,10 +174,10 @@ define NXStem [
 ];
 
 define Noun [
-        (A) N1Stem                  ("#") 
-    |    A  N1aStem "+poss":{-L}    ("#")
-    |       N1aStem                 ("#")
-    |       NXStem                  ("#")
+        (A) N1Stem                  
+    |    A  N1aStem "+poss":{-L}   
+    |       N1aStem                
+    |       NXStem                 
 ] .o. makeNominalSetA;
 
 define Word [TV | IV | Noun];
