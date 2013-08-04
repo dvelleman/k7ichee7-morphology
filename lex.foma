@@ -50,7 +50,7 @@ define A [ "a1s+" | "a2s+" | "a3s+" | "a1p+" | "a2p+" | "a3p+" ];
 
 define Indicative [ "inc+" | "cpl+" | "n.imp+" | "dep+" ];
 
-define Subjunctive [ "imp+" ];
+define Subjunctive [ "opt+" | "imp+" ];
 
 define makeR [
         [{R-} -> 0          || _ [M|"a1s+"] ]
@@ -87,7 +87,7 @@ define makeMovement [
 ];
 
 define makeTAM [
-        ["imp+" (->) "dep+" ] .o. ["imp+" -> "inc+" ]
+        ["opt+" -> "dep+" ] .o. ["imp+" -> "inc+" ]
     .o. ["inc+" -> {ka-}    || _ [%0|%-|%R]* C ]
     .o. ["inc+" -> {k-}     || _ [%0|%-|%R]* V ]
     .o. ["n.imp+" -> {ma-}  || _ [%0|%-|%R]* C ]
