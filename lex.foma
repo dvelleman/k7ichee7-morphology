@@ -30,6 +30,10 @@ define NX [
         "house":{jah}
 ];
 
+define ADJ [
+        "big":{nim<a>}
+];
+
 define B [  
         "b1s+":{in-}
     |   "b2s+":{at-}
@@ -98,7 +102,9 @@ define makeTAM [
 
 define IVBase [
         IV
+    |   IV "+celer":{-lob'}
     |   [RTV|DTV] "+cp":{-(V)taj}
+    |   ADJ "+vers":{-Vr}
 ];
 
 define DTVBase [
