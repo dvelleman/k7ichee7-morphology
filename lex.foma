@@ -105,14 +105,30 @@ define DTVBase [
         DTV
     |   [RTV|DTV|IVBase] "+caus":{-(i)sa}
     |   [RTV|DTV|IVBase] "+instr":{-(i)b'e}
+    |   RTV              "+celer":{-Vla7} # Handle these two separately
+    |   DTV              "+celer":{-la7}  # to avoid getting the vowel
+                                          # deleted.
+    |   RTV              "+intens":{-V1a7}
+    |   DTV              "+intens":{-1a7}
 ];
 
-define IVStem [
+define PassiveStem [
         RTV "+pass":{-L} 
-    |   RTV "+ap":{-On}  
+    |   [DTVBase .o. ~[?* {la7}]] "+pass":{-x}  
+    |   [DTVBase .o.  [?* {la7}]] "+pass":{-ox}  
+];
+
+define AntipassiveStem [
+        RTV "+ap":{-On}  
+    |   [DTVBase .o. ~[?* {la7}]] "+pass":{-n}  
+    |   [DTVBase .o.  [?* {la7}]] "+pass":{-on}  
+];
+
+
+define IVStem [
+        PassiveStem
+    |   AntipassiveStem
     |   RTV "+af":{-Ow} 
-    |   DTVBase "+pass":{-x}  
-    |   DTVBase "+ap":{-n}
     |   DTVBase "+af":{-n}
     |   IV 
 ];
@@ -133,15 +149,15 @@ define VIDX [
 define VTIX [
         RTV "+ss":{-Oh#}
     |   RTV
-    |   DTVStem "+ss":{-:j#}
-    |   DTVStem "+ss":{-j}
+    |   [DTVStem .o. ~[?* "7"]] ["+ss":{-:j#} | "+ss":{-j}]
+    |   [DTVStem .o.  [?* "7"]]
 ];
 
 define VTDX [
         RTV "+ss":{-A7#}
     |   RTV "+ss":{-A}
-    |   DTVStem "+ss":{-:j#}
-    |   DTVStem "+ss":{-j}
+    |   [DTVStem .o. ~[?* "7"]] ["+ss":{-:j#} | "+ss":{-j}]
+    |   [DTVStem .o.  [?* "7"]]
 ];
 
 define TV [
@@ -158,26 +174,54 @@ define IV [
     |   "mov.imp+":{j-} B M   VIDX 
 ] .o. makeR .o. makeMovement .o. makeTAM;
 
+# Noun stems. Here we import noun roots from the lexicon, but
+# also handle nominalizations.
+#
+# IV bases (except for CP bases) need their verbal nouns
+# lexically specified.  CP bases always have a VN in -eem.
+# (Mondloch p.158).  All IV bases have a personal nominalization
+# in -eel --- Mondloch says this is unproductive for the CP (p.159)
+# so we overgenerate a bit.
+#
+# From active verbs we form a passive VN in -ik (p.132), an
+# unpossessible antipassive VN in -ik (p.176), a possessible
+# antipassive VN in -eem (p.176), and an antipassive personal
+# nominalization in -eel (p.179).
+#
+# From RTV and DTV stems we generate an active perfect in -(OO)m.  
+# We make this a noun that can go unpossessed --- thus accounting as
+# well for the irregular *passive* perfect in -(OO)m.  From IV bases and
+# antipassive stems we generate a perfect in -(i)naq; this can never
+# be possessed.
+
 define N1Stem [
         N1
-    |   RTV     "+perf":{-OOm}
-    |   DTVStem "+perf":{-:m}
+    |   RTV     "+perf":{-OOm}       # Active perfect (RTV) 
+                                     #   and irreg. passive perfect.
+    |   DTVStem "+perf":{-:m}        # Active perfect (DTV)
+                                     #   and irreg. passive perfect.
+    |   AntipassiveStem "+vn":{-eem} # Antipassive VN #1 (Mondloch p.176)
+    |   AntipassiveStem "+person":{-eel} # Antipassive agt N (p.179)
+    |   IVBase "+person":{-eel}            # Intrans  agt N (p.92)
+    |   [$["+cp"] .o. IVBase] "+vn":{-eem} # CP VN (Mondloch p.158)
 ];
 
 define N1aStem [
-        IVStem "+nmlzr":{-ik}
+        PassiveStem "+vn":{-ik}        # Passive VN (Mondloch p.132)
 ];
 
 define NXStem [
         NX
-    |   [~$["+pass"] .o. IVStem] "+perf":{-(i)naq}
+    |   AntipassiveStem "+vn":{-ik}    # Antipassive VN #2 (Mondloch p.176)
+    |   IVBase "+perf":{-(i)naq}       # Intransitive perfect
+    |   AntipassiveStem "+perf":{-(i)naq}   # Antipassive perfect
 ];
 
 define Noun [
-        (A) N1Stem                  
-    |    A  N1aStem "+poss":{-L}   
-    |       N1aStem                
-    |       NXStem                 
+        (A) N1Stem                  "#"
+    |    A  N1aStem "+poss":{-L}    "#"
+    |       N1aStem                 "#"
+    |       NXStem                  "#"
 ] .o. makeNominalSetA;
 
 define Word [TV | IV | Noun];
