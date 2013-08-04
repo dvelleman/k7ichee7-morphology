@@ -117,7 +117,7 @@ load stack lex.bin
 define Input;
 regex [Input .o. VowelLoss .o. VowelHarmony .o. ConsonantHarmony .o. VowelLength .o. VowelContraction .o. Unhyphenate];
 save stack gloss.bin
-regex [[Input .o. VowelLoss .o. VowelHarmony .o. ConsonantHarmony].l .o. VowelContraction .o. Unhyphenate];
+regex [[Input .o. VowelLoss .o. VowelHarmony .o. ConsonantHarmony .o. VowelLength].l .o. VowelContraction .o. Unhyphenate];
 save stack segment.bin
 
 #define CleanTopSide [0 <- "(" ?* ")" ] .o. [0 <- "|"] .o. [0 <- "|a0|"] .o. [0 <- "|b0|"] .o. [0 <- "#"];
