@@ -23,9 +23,12 @@ define VowelHarmony [
 	[ "V" -> a || a \V* _	] .o.
 	[ "V" -> e || e \V* _	] .o.
 	[ "V" -> i || i \V* _	] .o.
-	[ "h" -> "w" || [o|u] S* _ S* V     ] .o.
-	[ "h" -> "y" || V     S* _ S* V     ] .o.
         [ %< V %> -> 0 ]
+];
+
+define Aitch [
+	[ "h" -> "w" || [o|u] S* _ S* V     ] .o.
+	[ "h" -> "y" || V     S* _ S* V     ] 
 ];
 
 define ConsonantHarmony [
@@ -64,7 +67,7 @@ define VowelLength [
 		e h -> ē,
 		i h -> ī,
 		o h -> ō,
-		u h -> ū ] .o. # /h/ gives long vowels unaffected by
+		u h -> ū  || _ S* C ] .o. # /h/ gives long vowels unaffected by
 					# shortening
 	[ a -> ā, e -> ē, i -> ī, o -> ō, u -> ū || _ \V* L ] .o. [L -> 0] .o.
 	[ a -> ā, e -> ē, i -> ī, o -> ō, u -> ū || R "-" _ ] .o. [R -> 0] .o.
@@ -118,10 +121,10 @@ define Unhyphenate [ "-" -> 0];
 
 load stack lex.bin
 define Input;
-regex [Input .o. VowelLoss .o. VowelHarmony .o. ConsonantHarmony .o. VowelLength .o. VowelContraction .o. Spelling .o. Unhyphenate];
+regex [Input .o. VowelLoss .o. VowelHarmony .o. ConsonantHarmony .o. VowelLength .o. Aitch .o. VowelContraction .o. Spelling .o. Unhyphenate];
 save stack gloss.bin
 pop
-regex Spelling.i .o. [[Input .o. VowelLoss .o. VowelHarmony .o. ConsonantHarmony .o. VowelLength].l .o. VowelContraction .o. Spelling .o. Unhyphenate];
+regex Spelling.i .o. [[Input .o. VowelLoss .o. VowelHarmony .o. ConsonantHarmony .o. VowelLength].l .o. Aitch .o. VowelContraction .o. Spelling .o. Unhyphenate];
 save stack segment.bin
 
 #define CleanTopSide [0 <- "(" ?* ")" ] .o. [0 <- "|"] .o. [0 <- "|a0|"] .o. [0 <- "|b0|"] .o. [0 <- "#"];
