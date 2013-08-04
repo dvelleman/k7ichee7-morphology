@@ -12,6 +12,11 @@ define VowelLoss [
         .o. [ %) -> 0 ]
 ];
 
+define CanonicalVowelLoss [
+            [ %( [V|X] %)  ->   0  || V S* _ ]
+        .o. [ %( -> 0 ] 
+        .o. [ %) -> 0 ]
+];
 define VowelHarmony [
 	[ "A" -> u || u \V* _ 	] .o.
 	[ "A" -> o || o \V* _ 	] .o.
@@ -121,11 +126,18 @@ define Unhyphenate [ "-" -> 0];
 
 load stack lex.bin
 define Input;
-regex [Input .o. VowelLoss .o. VowelHarmony .o. ConsonantHarmony .o. VowelLength .o. Aitch .o. VowelContraction .o. Spelling .o. Unhyphenate];
-save stack gloss.bin
+define Analyze [Input .o. VowelLoss .o. VowelHarmony .o. ConsonantHarmony .o. VowelLength .o. Aitch .o. VowelContraction .o. Spelling .o. Unhyphenate];
+regex Analyze;
+save stack analyze.bin
 pop
-regex Spelling.i .o. [[Input .o. VowelLoss .o. VowelHarmony .o. ConsonantHarmony .o. VowelLength].l .o. Aitch .o. VowelContraction .o. Spelling .o. Unhyphenate];
+
+define AnalysisLookup Analyze.i;
+
+define Segment [AnalysisLookup .o. Input .o. CanonicalVowelLoss .o. VowelHarmony .o. ConsonantHarmony].i;
+
+regex Segment;
 save stack segment.bin
+pop
 
 #define CleanTopSide [0 <- "(" ?* ")" ] .o. [0 <- "|"] .o. [0 <- "|a0|"] .o. [0 <- "|b0|"] .o. [0 <- "#"];
 
