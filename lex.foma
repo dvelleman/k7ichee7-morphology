@@ -156,14 +156,14 @@ define VIDX [
 define VTIX [
         RTV "+ss":{-Oh#}
     |   RTV
-    |   [DTVStem .o. ~[?* "7"]] ["+ss":{-:j#} | "+ss":{-j}]
+    |   [DTVStem .o. ~[?* "7"]] ["+ss":{-Vj#} | "+ss":{-j}]
     |   [DTVStem .o.  [?* "7"]]
 ];
 
 define VTDX [
         RTV "+ss":{-A7#}
     |   RTV "+ss":{-A}
-    |   [DTVStem .o. ~[?* "7"]] ["+ss":{-:j#} | "+ss":{-j}]
+    |   [DTVStem .o. ~[?* "7"]] ["+ss":{-Vj#} | "+ss":{-j}]
     |   [DTVStem .o.  [?* "7"]]
 ];
 
@@ -205,7 +205,7 @@ define N1Stem [
         N1
     |   RTV     "+perf":{-OOm}       # Active perfect (RTV) 
                                      #   and irreg. passive perfect.
-    |   DTVStem "+perf":{-:m}        # Active perfect (DTV)
+    |   DTVStem "+perf":{-Vm}        # Active perfect (DTV)
                                      #   and irreg. passive perfect.
     |   AntipassiveStem "+vn":{-eem} # Antipassive VN #1 (Mondloch p.176)
     |   AntipassiveStem "+person":{-eel} # Antipassive agt N (p.179)
