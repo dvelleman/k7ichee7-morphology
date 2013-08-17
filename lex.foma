@@ -169,7 +169,7 @@ define IVStem [
     |   AntipassiveStem
     |   RTV "+af":{-Ow} 
     |   DTVBase "+af":{-n}
-    |   IV 
+    |   IVBase
 ];
 
 define DTVStem [ DTVBase ];
