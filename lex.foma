@@ -7,32 +7,55 @@ define C [ {b'} | {ch} | {ch'} | h | j | k | {k'} | l | m | n | p | q | {q'} | r
 
 
 define RTV [
-        "make":{b'an}
-    |   "bury":{muq}
-    |   "see":{il}
+    "RTV":0 "(":0
+    [       {make}:{b'an}
+        |   {bury}:{muq}
+        |   {see}:{il}
+    ]
+    ")":0
 ];
 
 define DTV [
-        "cure":{kuna}
-    |   "carry":{eqa}
+    "DTV":0 "(":0
+    [
+            {cure}:{kuna}
+        |   {carry}:{eqa}
+    ]
+    ")":0
 ];
 
 define IV [
-        "enter":{ok}
-    |   "walk":{b'ihn}
+    "IV":0 "(":0
+    [
+            {enter}:{ok}
+        |   {walk}:{b'ihn}
+    ]
+    ")":0
 ];
 
 define N1 [
-        "avocado":{ooj}
+    "N":0 "(":0
+    [
+        {avocado}:{ooj}
+    ]
+    ")":0
 ];
 
 define NX [ 
-        "house":{jah}
+    "N":0 "(":0
+    [
+        {house}:{jah}
+    ]
+    ")":0
 ];
 
 define ADJ [
-        "big":{nim<a>}
-    |   "many":{k'ih<a>}
+    "ADJ":0 "(":0
+    [
+            {big}:{nim<a>}
+        |   {many}:{k'ih<a>}
+    ]
+    ")":0
 ];
 
 define B [  
@@ -143,28 +166,28 @@ define IVStem [
 define DTVStem [ DTVBase ];
 
 define VIIX [
-        IVStem "+ss":{-ik} %# 
-    |   IVStem 
+        IVStem "+viif":{-ik} %# 
+    |   IVStem "+viin":0
 ];
 
 define VIDX [
-        IVStem "+ss":{-oq} %#
-    |   [IVStem .o. [?* V]] "+ss":{-oqa}
-    |   [IVStem .o. [?* C]] "+ss":{-a} 
+        IVStem "+vidf":{-oq} %#
+    |   [IVStem .o. [?* V]] "+vidn":{-oqa}
+    |   [IVStem .o. [?* C]] "+vidn":{-a} 
 ];
 
 define VTIX [
-        RTV "+ss":{-Oh} %#
-    |   RTV
-    |   [DTVStem .o. ~[?* "7"]] ["+ss":{-Vj} %# | "+ss":{-j}]
-    |   [DTVStem .o.  [?* "7"]]
+        RTV "+vtif":{-Oh} %#
+    |   RTV "+vtin":0
+    |   [DTVStem .o. ~[?* "7"]] ["+vtif":{-Vj} %# | "+vtin":{-j}]
+    |   [DTVStem .o.  [?* "7"]] ["+vtif":0     %# | "+vtin":0   ]
 ];
 
 define VTDX [
-        RTV "+ss":{-A7} %#
-    |   RTV "+ss":{-A}
-    |   [DTVStem .o. ~[?* "7"]] ["+ss":{-Vj} %# | "+ss":{-j}]
-    |   [DTVStem .o.  [?* "7"]]
+        RTV "+vtdf":{-A7} %#
+    |   RTV "+vtdn":{-A}
+    |   [DTVStem .o. ~[?* "7"]] ["+vtdf":{-Vj} %# | "+vtdn":{-j}]
+    |   [DTVStem .o.  [?* "7"]] ["+vtdf":0     %# | "+vtdn":0   ]
 ];
 
 define TV [
@@ -203,32 +226,34 @@ define IV [
 
 define N1Stem [
         N1
-    |   RTV     "+perf":{-OOm}       # Active perfect (RTV) 
-                                     #   and irreg. passive perfect.
-    |   DTVStem "+perf":{-Vm}        # Active perfect (DTV)
-                                     #   and irreg. passive perfect.
-    |   AntipassiveStem "+vn":{-eem} # Antipassive VN #1 (Mondloch p.176)
-    |   AntipassiveStem "+person":{-eel} # Antipassive agt N (p.179)
-    |   IVBase "+person":{-eel}            # Intrans  agt N (p.92)
-    |   [$["+cp"] .o. IVBase] "+vn":{-eem} # CP VN (Mondloch p.158)
+    |   AntipassiveStem "+nm":{-eem} # Antipassive VN #1 (Mondloch p.176)
+    |   AntipassiveStem "+nl":{-eel} # Antipassive agt N (p.179)
+    |   IVBase "+nl":{-eel}            # Intrans  agt N (p.92)
+    |   [$["+cp"] .o. IVBase] "+nm":{-eem} # CP VN (Mondloch p.158)
 ];
 
 define N1aStem [
-        PassiveStem "+vn":{-ik}        # Passive VN (Mondloch p.132)
+        PassiveStem "+nk":{-ik}        # Passive VN (Mondloch p.132)
 ];
 
 define NXStem [
         NX
-    |   AntipassiveStem "+vn":{-ik}    # Antipassive VN #2 (Mondloch p.176)
-    |   IVBase "+perf":{-(i)naq}       # Intransitive perfect
-    |   AntipassiveStem "+perf":{-(i)naq}   # Antipassive perfect
+    |   AntipassiveStem "+nk":{-ik}    # Antipassive VN #2 (Mondloch p.176)
 ];
 
 define Noun [
-        (A) N1Stem                  "#"
-    |    A  N1aStem "+poss":{-L}    "#"
-    |       N1aStem                 "#"
-    |       NXStem                  "#"
+        (A) N1Stem                      "#"
+    |    A  N1aStem "+poss":{-L}        "#"
+    |       N1aStem                     "#"
+    |       NXStem                      "#"
+    |   (A) RTV     "+vtpf":{-OOm}      "#"
+    |   (A) RTV     "+vtpn":{-Om}       
+    |   (A) DTVStem "+vtpf":{-Vm}       "#"
+    |   (A) DTVStem "+vtpn":{-m}       
+    |       IVBase "+vipf":{-(i)naq}    "#" 
+    |       IVBase "+vipn":{-(i)naq}   
+    |   AntipassiveStem "+vipf":{-(i)naq} "#"
+    |   AntipassiveStem "+vipn":{-(i)naq}
 ] .o. makeNominalSetA;
 
 define Word [TV | IV | Noun];
