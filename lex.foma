@@ -24,6 +24,15 @@ define DTV [
     ")":0
 ];
 
+define POS [
+    "POS":0 "(":0
+    [
+            {discoid}:{ket}
+            {sitting}:{t'uy}
+    ]
+    ")":0
+];
+
 define IV [
     "IV":0 "(":0
     [
@@ -166,8 +175,10 @@ define IVStem [
 define DTVStem [ DTVBase ];
 
 define VIIX [
-        IVStem "+viif":{-ik} %# 
-    |   IVStem "+viin":0
+        IVStem              "+viif":{-ik}   %# 
+    |   IVStem              "+viin":0
+    |   POS    "+iv":{-i7}  "+viif":{-k}    %#
+    |   POS    "+iv":{-i7}  "+viin":0       
 ];
 
 define VIDX [
