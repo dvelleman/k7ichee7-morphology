@@ -5,6 +5,28 @@ define C [ {b'} | {ch} | {ch'} | h | j | k | {k'} | l | m | n | p | q | {q'} | r
                 | t | {t'} | {tz} | {tz'} | w | x | y | 7 ];
 
 
+define POS [
+    "POS":0 "(":0
+    [
+            {discoid}:{ket}
+        |   {sitting}:{t'uy}
+    ]
+    ")":0
+];
+
+define TEMP [
+        [POS .o.  [?* "l"]] "+temp":{-an}
+    |   [POS .o. ~[?* "l"]] "+temp":{-Vl}
+];
+
+define PERM [
+        POS "+temp":{-V1}
+];
+
+define POSTV [
+        [POS "+fall":{-Vb'a7}]
+    |   [POS "+port":{-e}]
+];
 
 define RTV [
     "RTV":0 "(":0
@@ -22,16 +44,7 @@ define DTV [
         |   {carry}:{eqa}
     ]
     ")":0
-];
-
-define POS [
-    "POS":0 "(":0
-    [
-            {discoid}:{ket}
-            {sitting}:{t'uy}
-    ]
-    ")":0
-];
+] | POSTV;
 
 define IV [
     "IV":0 "(":0
@@ -40,7 +53,7 @@ define IV [
         |   {walk}:{b'ihn}
     ]
     ")":0
-];
+] | TEMP ;
 
 define N1 [
     "N":0 "(":0
@@ -132,7 +145,6 @@ define makeTAM [
 ];
 
 
-
 define IVBase [
         IV
     |   IV "+celer":{-lob'}
@@ -162,6 +174,7 @@ define AntipassiveStem [
     |   [DTVBase .o. ~[?* {la7}]] "+ap":{-n}  
     |   [DTVBase .o.  [?* {la7}]] "+ap":{-on}  
 ];
+
 
 
 define IVStem [
