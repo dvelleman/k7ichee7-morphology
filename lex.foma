@@ -467,19 +467,11 @@ define PassiveStem [
 ];
  
 
-define RegularAntipassiveStem  [
+define AntipassiveStem WithIrregulars([
         RTV "+ap":{-On}  
     |   [DTVBase .o. ~[?* {la7}]] "+ap":{-n}  
     |   [DTVBase .o.  [?* {la7}]] "+ap":{-on}  
-];
-
-define IrregularAntipassiveStem [
-    RegularAntipassiveStem.u .o. IrregularForms
-];
-
-define AntipassiveStem [ 
-    IrregularAntipassiveStem .P. RegularAntipassiveStem 
-];
+]);
 
 define IVStem [
         PassiveStem
