@@ -266,6 +266,28 @@ define N1 [
         |   {trash}:{mees}
         |   {weeds}:{q'ayees}
         |   {precipice}:{swaan}
+        |   {corn}:{ixiim}
+        |   {eye}:{b'aq'wach}
+        |   {sandal}:{xajaab'}
+# Genuinely irregular pluralizable N1s are listed out here.
+# Regular or semiregular ones go in the class below.
+        |   {boy}:{alah}
+        |   {boy}:{ala} "+pl":{-b'oom}
+        |   {girl}:{alih}
+        |   {girl}:{al} "+pl":{-tomaab'}
+        |   {man}:{achih}
+        |   {man}:{achi} "+pl":{-jaab'}
+    ]
+    ")":0
+];
+
+define N1pluralizable [
+    "N":0 "(":0
+    [
+            {child}:{ak'aal-aab'}
+        |   {woman}:{ixoq-iib'}
+        |   {worker}:{ajchaak-iib'}
+        |   {priest}:{ajq'iij-aab'}
     ]
     ")":0
 ];
@@ -274,6 +296,16 @@ define N1a [
     "N":0 "(":0
     [
         {bean}:{kinaq'}
+    ]
+    ")":0
+];
+
+define N2 [
+    "N":0 "(":0
+    [       {bone}:{b'aaq-iil}
+        |   {blood}:{kik'-eel}
+        |   {shadow}:{mu7j-aal}
+        |   {hide}:{tz'u7uum-aal}
     ]
     ")":0
 ];
@@ -300,9 +332,18 @@ define N3 [
     ")":0
 ];
 
+define N1sg [ N1pluralizable .o. [ "-" ?* -> 0 || _ .#. ]];
+
+define N1pl [ N1pluralizable "+pl":0 ];
+
+define N2poss [ N2 "+inal":0 ];
+
+define N2plain [ N2 .o. [ "-" ?* -> 0 || _ .#. ]];
+
 define N3poss [ N3 .o. [ "-" ?* -> 0 || _ .#. ]];
 
 define N3unposs [ N3 "+unposs":0 ];
+
 
 define NX [ 
     "N":0 "(":0
@@ -491,9 +532,13 @@ define IV [
 
 define N1Stem [
         N1
+    |   N1sg                        # Singulars of pluralizable N1
+    |   N1pl                        # Plurals of pluralizable N1
     |   AntipassiveStem "+nm":{-eem} # Antipassive VN #1 (Mondloch p.176)
-    |   AntipassiveStem "+nl":{-eel} # Antipassive agt N (p.179)
-    |   IVBase "+nl":{-eel}            # Intrans  agt N (p.92)
+    |   AntipassiveStem "+nl":{-eel} ("+pl":{-aab'}) 
+                                       # Antipassive agt N (p.179)
+    |   IVBase "+nl":{-eel} ("+pl":{-aab'})           
+                                        # Intrans  agt N (p.92)
     |   [$["+cp"] .o. IVBase] "+nm":{-eem} # CP VN (Mondloch p.158)
 ];
 
@@ -512,6 +557,8 @@ define Noun [
     |    A  N1aStem "+poss":{-L}        "#"
     |       N1aStem                     "#"
     |       NXStem                      "#"
+    |    A  N2poss                      "#"
+    |   (A) N2plain                     "#"
     |    A  N3poss                      "#"
     |       N3unposs                    "#"
     |   (A) RTV     "+vtpf":{-OOm}      "#"
@@ -525,7 +572,8 @@ define Noun [
 ] .o. makeNominalSetA;
 
 define Adjective [
-            ADJ ("+attr":{-V})
+            ADJ     ("+attr":{-V})
+    |       ADJ     "+intens":{-Vlaj}
     |       ADJ     "+pl":{-aq}
     |       ADJ     "+pl.f":{-a'q}  "#"
     |       TEMP    "+f":{-ik}      "#"
