@@ -1,5 +1,6 @@
 define S ["-"|":"];
 define V [ a | e | i | o | u | ä | ë | ï | ö | ü | ā | ē | ī | ō | ū ];
+define v [ a | e | i | o | u ];
 define X [ "A" | "O" | "V" ];
 define C [ {b'} | {ch} | {ch'} | h | j | k | {k'} | l | m | n | p | q | {q'} | r | s
                 | t | {t'} | {tz} | {tz'} | w | x | y | 7 ];
@@ -8,8 +9,54 @@ define C [ {b'} | {ch} | {ch'} | h | j | k | {k'} | l | m | n | p | q | {q'} | r
 define POS [
     "POS":0 "(":0
     [
-            {discoid}:{ket}
-        |   {sitting}:{t'uy}
+        [
+                {discoid}:{ket}
+            |   {sitting}:{t'uy}
+            |   {heaped}:{mul}
+            |   {standing}:{tak'}
+            |   {spherical}:{sur}
+            |   {cylindrical}:{b'ol}
+            |   {stopped}:{tan}
+            |   {lonely}:{won}
+            |   {reclining}:{q'oy}
+            |   {uncovered}:{san}
+            |   {straight}:{suk'}
+            |   {vacant}:{tol}
+            |   {united}:{tun}
+            |   {hanging}:{xek}
+            |   {blinking}:{yup}
+            |   {naked}:{ch'an}
+            |   {wet}:{ch'aq}
+            |   {facedown}:{jup}
+            |   {paired}:{k'ul}
+            |   {bowed}:{pach}
+            |   {faceup}:{pak'}
+            |   {high}:{paq}
+            |   {unfolded}:{patz'}
+            |   {flat}:{per}
+            |   {crosswise}:{q'e7}
+            |   {tilted}:{tzal}
+            |   {dangling}:{tzay}
+            |   {crawling}:{chaq}
+            |   {settled}:{jeq}
+            |   {alive}:{k'as}
+            |   {lengthwise}:{rab'}
+            |   {crosslegged}:{sep}
+            |   {kneeling}:{xuk}
+            |   {longlegged}:{wak'}
+            |   {hunched}:{wuq'}
+            |   {unfinished}:{ch'eq}
+            |   {crooked}:{jech'}
+            |   {certain}:{jik}
+            |   {thick}:{jil}
+            |   {gaping}:{k'ab'}
+            |   {round}:{k'ol}
+            |   {frayed}:{kiy}
+            |   {curled}:{kot}
+            |   {extensive}:{lik'}
+            |   {warped}:{pek'}
+        ] 
+        .p.   {?}:0 [C v C]
     ]
     ")":0
 ];
@@ -20,7 +67,7 @@ define TEMP [
 ];
 
 define PERM [
-        POS "+temp":{-V1}
+        POS "+perm":{-V1}
 ];
 
 define POSTV [
@@ -30,9 +77,91 @@ define POSTV [
 
 define RTV [
     "RTV":0 "(":0
-    [       {make}:{b'an}
-        |   {bury}:{muq}
-        |   {see}:{il}
+    [
+        [       {make}:{b'an}
+            |   {bury}:{muq}
+            |   {see}:{il}
+            |   {grab}:{chap}
+            |   {sweep}:{mes}
+            |   {buy}:{loq'}
+            |   {shake}:{yik}
+            |   {mix}:{yuj}
+            |   {destroy}:{yoj}
+            |   {raise}:{yak}
+            |   {scold}:{yaj}
+            |   {tie}:{xim}
+            |   {construct}:{wok}
+            |   {decorate}:{wiq}
+            |   {tear}:{wex}
+            |   {grind}:{waq}
+            |   {bother}:{tzur}
+            |   {kindle}:{tzij}
+            |   {rip}:{tzer}
+            |   {drop}:{tzaq}
+            |   {cook}:{tzak}
+            |   {paint}:{tz'aj}
+            |   {disassemble}:{tzur}
+            |   {open}:{tor}
+            |   {pay}:{toj}
+            |   {help}:{to7}
+            |   {eat}:{tij}
+            |   {bite}:{ti7}
+            |   {puncture}:{teq'}
+            |   {separate}:{tas}
+            |   {send}:{taq}
+            |   {ask}:{tah}
+            |   {sew}:{t'is}
+            |   {wipe}:{su7}
+            |   {deceive}:{sub'}
+            |   {untangle}:{sol}
+            |   {wound}:{sok}
+            |   {lose}:{sach}
+            |   {lick}:{riq'}
+            |   {find}:{riq}
+            |   {lend}:{qaj}
+            |   {chip}:{q'ip}
+            |   {stain}:{q'o7}
+            |   {cut}:{q'at}
+            |   {dice}:{pus}
+            |   {wrap}:{pis}
+            |   {butcher}:{pil}
+            |   {squish}:{pich'}
+            |   {weigh}:{paj}
+            |   {assemble}:{nuk'}
+            |   {feel}:{na7}
+            |   {soak}:{mu7}
+            |   {collect}:{mol}
+            |   {hire}:{mok}
+            |   {heat}:{miq'}
+            |   {fold}:{mej}
+            |   {tortilla}:{lej}
+            |   {forgive}:{kuy}
+            |   {preserve}:{kol}
+            |   {use}:{koj}
+            |   {cut}:{ket}
+            |   {weave}:{kem}
+            |   {show}:{k'ut}
+            |   {dig}:{k'ot}
+            |   {finish}:{k'is}
+            |   {hurl}:{k'aq}
+            |   {change}:{k'ex}
+            |   {degrain}:{k'et}
+            |   {burn}:{k'at}
+            |   {bring}:{k'am}
+            |   {scrape}:{juq}
+            |   {shave}:{jos}
+            |   {tear}:{jis}
+            |   {pull}:{jek'}
+            |   {divide}:{jach}
+            |   {water}:{ja7}
+            |   {explain}:{ch'ob'}
+            |   {defeat}:{ch'ak}
+            |   {hit}:{ch'ay}
+            |   {wash}:{ch'aj}
+            |   {roast}:{b'ol}
+            |   {delay}:{b'ey}
+        ] 
+        .p.   {?}:0 [C v C]
     ]
     ")":0
 ];
@@ -42,6 +171,71 @@ define DTV [
     [
             {cure}:{kuna}
         |   {carry}:{eqa}
+        |   {bear}:{ala}
+        |   {say}:{b'i}
+        |   {mourn}:{b'iso}
+        |   {sing}:{b'ixa}
+        |   {address}:{ch'ab'e}
+        |   {protect}:{chaji}
+        |   {work}:{chaku}
+        |   {designate}:{chilb'e}
+        |   {use}:{choko}
+        |   {resolve}:{choma}
+        |   {inherit}:{echb'e}
+        |   {lug}:{ere}
+        |   {remove}:{ehsa}
+        |   {measure}:{ehta}
+        |   {bewitch}:{itzi}
+        |   {await}:{iye}
+        |   {winnow}:{jopi}
+        |   {awaken}:{k'asu}
+        |   {engender}:{k'ajola}
+        |   {excavate}:{k'oti}
+        |   {grind}:{ke'e}
+        |   {mount}:{keje}
+        |   {love}:{loq'o}
+        |   {start}:{maji}
+        |   {wrong}:{maku}
+        |   {admire}:{mayi}
+        |   {shade}:{muja}
+        |   {gather}:{muli}
+        |   {obey}:{nima}
+        |   {plan}:{no7ji}
+        |   {serve}:{patani}
+        |   {fry}:{poli}
+        |   {pop}:{poq'i}
+        |   {ignite}:{poro}
+        |   {embrace}:{q'alu}
+        |   {impede}:{q'ate}
+        |   {pass}:{q'axa}
+        |   {cover}:{q'u7u}
+        |   {lower}:{qasa}
+        |   {trim}:{qupi}
+        |   {covet}:{rayi}
+        |   {call}:{sik'i}
+        |   {gift}:{sipa}
+        |   {swell}:{sipo}
+        |   {visit}:{soli}
+        |   {tamale}:{sub'a}
+        |   {spin}:{suti}
+        |   {till}:{taji}
+        |   {continue}:{taqe}
+        |   {shoulder}:{tele}
+        |   {pursue}:{terne7e}
+        |   {teach}:{tijo}
+        |   {court}:{tz'ono}
+        |   {return}:{tzali}
+        |   {block}:{tzapi}
+        |   {mock}:{tze7e}
+        |   {recount}:{tzijo}
+        |   {liberate}:{tzoqopi}
+        |   {hunt}:{tzuku}
+        |   {bother}:{tzuru}
+        |   {drink}:{uk'a}
+        |   {devour}:{web'e}
+        |   {collapse}:{wuli}
+        |   {vomit}:{xawa}
+        |   {scare}:{xib'i}
     ]
     ")":0
 ] | POSTV;
@@ -58,10 +252,57 @@ define IV [
 define N1 [
     "N":0 "(":0
     [
-        {avocado}:{ooj}
+            {avocado}:{ooj}
+        |   {face}:{wach}
+        |   {horse}:{keej}
+        |   {loom}:{keem}
+        |   {people}:{winaq}
+        |   {tortilla}:{leej}
+        |   {mouth}:{chii7}
+        |   {sky}:{kaaj}
+        |   {word}:{tziij}
+        |   {soul}:{ahnimah}
+        |   {nation}:{amaaq'}
+        |   {trash}:{mees}
+        |   {weeds}:{q'ayees}
+        |   {precipice}:{swaan}
     ]
     ")":0
 ];
+
+define N1a [
+    "N":0 "(":0
+    [
+        {bean}:{kinaq'}
+    ]
+    ")":0
+];
+
+define N3 [
+    "N":0 "(":0
+    [
+            {foot}:{aqan-aaj}
+        |   {hand}:{q'ab'-aaj}
+        |   {stomach}:{paam-aaj}
+        |   {tooth}:{ware'-aaj}
+        |   {head}:{joloom-aaj}
+        |   {meat}:{tii7-iij}
+        |   {nest}:{sook-aaj}
+        |   {name}:{b'i'-aaj}
+        |   {mother}:{naan-axeel}
+        |   {younger.sibling}:{chaaq'-ixeel}
+        |   {in.law}:{jii7-axeel}
+        |   {husband}:{achajiil-oom}
+        |   {wife}:{ixoqiil-oom}
+        |   {daughter.in.law}:{aliib'-atz}
+        |   {knee}:{ch'eek-aaj}
+    ]
+    ")":0
+];
+
+define N3poss [ N3 .o. [ "-" ?* -> 0 || _ .#. ]];
+
+define N3unposs [ N3 "+unposs":0 ];
 
 define NX [ 
     "N":0 "(":0
@@ -257,7 +498,8 @@ define N1Stem [
 ];
 
 define N1aStem [
-        PassiveStem "+nk":{-ik}        # Passive VN (Mondloch p.132)
+        N1a
+    |   PassiveStem "+nk":{-ik}        # Passive VN (Mondloch p.132)
 ];
 
 define NXStem [
@@ -270,6 +512,8 @@ define Noun [
     |    A  N1aStem "+poss":{-L}        "#"
     |       N1aStem                     "#"
     |       NXStem                      "#"
+    |    A  N3poss                      "#"
+    |       N3unposs                    "#"
     |   (A) RTV     "+vtpf":{-OOm}      "#"
     |   (A) RTV     "+vtpn":{-Om}       
     |   (A) DTVStem "+vtpf":{-Vm}       "#"
@@ -280,7 +524,18 @@ define Noun [
     |   AntipassiveStem "+vipn":{-(i)naq}
 ] .o. makeNominalSetA;
 
-define Word [TV | IV | Noun];
+define Adjective [
+            ADJ ("+attr":{-V})
+    |       ADJ     "+pl":{-aq}
+    |       ADJ     "+pl.f":{-a'q}  "#"
+    |       TEMP    "+f":{-ik}      "#"
+    |       TEMP
+    |       PERM    "+sg":{-ik}
+    |       PERM    "+pl":{-aq}
+    |       PERM    "+pl.f":{-a'q}  "#"
+];
+
+define Word [TV | IV | Noun | Adjective];
 
 regex Word;
 save stack lex.bin
