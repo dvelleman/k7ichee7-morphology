@@ -5,7 +5,6 @@ define X [ "A" | "O" | "V" ];
 define C [ {b'} | {ch} | {ch'} | h | j | k | {k'} | l | m | n | p | q | {q'} | r | s
                 | t | {t'} | {tz} | {tz'} | w | x | y | 7 ];
 
-
 define POS [
     "POS":0 "(":0
     [
@@ -245,6 +244,7 @@ define IV [
     [
             {enter}:{ok}
         |   {walk}:{b'ihn}
+        |   {sleep}:{war}
     ]
     ")":0
 ] | TEMP ;
@@ -362,6 +362,20 @@ define ADJ [
     ")":0
 ];
 
+define IrregularForms [
+        "RTV":0 "(":0   {buy}:{loq'}      ")":0 "+ap":{-oman}
+    |   "RTV":0 "(":0   {wash}:{ch'aj}    ")":0 "+ap":{-oman}
+    |   "RTV":0 "(":0   {help}:{tob'}     ")":0 "+ap":{-an}
+    |   "IV":0 "(":0    {sleep}:{war}   ")":0 "+caus":{-tisa}
+    |   "IV":0 "(":0    {come}:{pee}    ")":0 "+caus":{-tsa}
+    |   "IV":0 "(":0    {exit}:{ee}     ")":0 "+caus":{-sa}
+    |   "IV":0 "(":0    {descend}:{qaa} ")":0 "+caus":{-sa}
+];
+
+define WithIrregulars(X) [
+    [X.u .o. IrregularForms] .P. X
+];
+
 define B [  
         "b1s+":{in-}
     |   "b2s+":{at-}
@@ -434,7 +448,8 @@ define IVBase [
     |   ADJ "+vers":{-Vr}
 ];
 
-define DTVBase [
+
+define DTVBase WithIrregulars([
         DTV
     |   [RTV|DTV|IVBase] "+caus":{-(i)sa}
     |   [RTV|DTV|IVBase] "+instr":{-(i)b'e}
@@ -443,7 +458,7 @@ define DTVBase [
                                           # deleted.
     |   RTV              "+intens":{-V1a7}
     |   DTV              "+intens":{-1a7}
-];
+]);
 
 define PassiveStem [
         RTV "+pass":{-L} 
@@ -451,21 +466,20 @@ define PassiveStem [
     |   [DTVBase .o.  [?* {la7}]] "+pass":{-ox}  
 ];
  
-define IrregularAntipassiveStem [
-        "RTV":0 "(":0   {buy}:{loq'}      ")":0 "+ap":{-oman}
-    |   "RTV":0 "(":0   {wash}:{ch'aj}    ")":0 "+ap":{-oman}
-    |   "RTV":0 "(":0   {help}:{tob'}     ")":0 "+ap":{-an}
-];
 
-define AntipassiveStem [
-    IrregularAntipassiveStem
-] .P. [
+define RegularAntipassiveStem  [
         RTV "+ap":{-On}  
     |   [DTVBase .o. ~[?* {la7}]] "+ap":{-n}  
     |   [DTVBase .o.  [?* {la7}]] "+ap":{-on}  
 ];
 
+define IrregularAntipassiveStem [
+    RegularAntipassiveStem.u .o. IrregularForms
+];
 
+define AntipassiveStem [ 
+    IrregularAntipassiveStem .P. RegularAntipassiveStem 
+];
 
 define IVStem [
         PassiveStem
