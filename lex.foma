@@ -450,8 +450,16 @@ define PassiveStem [
     |   [DTVBase .o. ~[?* {la7}]] "+pass":{-x}  
     |   [DTVBase .o.  [?* {la7}]] "+pass":{-ox}  
 ];
+ 
+define IrregularAntipassiveStem [
+        "RTV":0 "(":0   {buy}:{loq'}      ")":0 "+ap":{-oman}
+    |   "RTV":0 "(":0   {wash}:{ch'aj}    ")":0 "+ap":{-oman}
+    |   "RTV":0 "(":0   {help}:{tob'}     ")":0 "+ap":{-an}
+];
 
 define AntipassiveStem [
+    IrregularAntipassiveStem
+] .P. [
         RTV "+ap":{-On}  
     |   [DTVBase .o. ~[?* {la7}]] "+ap":{-n}  
     |   [DTVBase .o.  [?* {la7}]] "+ap":{-on}  
@@ -545,6 +553,8 @@ define N1Stem [
 define N1aStem [
         N1a
     |   PassiveStem "+nk":{-ik}        # Passive VN (Mondloch p.132)
+    |   [RTV|DTVStem|IVStem] "+nb":{-b'al}
+                                       # Instrumental noun (Larsen 269)
 ];
 
 define NXStem [
