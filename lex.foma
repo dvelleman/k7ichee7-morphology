@@ -246,6 +246,7 @@ define IV [
         |   {walk}:{b'ihn}
         |   {sleep}:{war}
         |   {come}:{peht}
+        |   {descend}:{qahj}
     ]
     ")":0
 ] | TEMP ;
@@ -364,14 +365,24 @@ define ADJ [
 ];
 
 define IrregularForms [
+
+# RTVs
+
         "RTV":0 "(":0   {buy}:{loq'}      ")":0 "+ap":{-oman}
     |   "RTV":0 "(":0   {wash}:{ch'aj}    ")":0 "+ap":{-oman}
     |   "RTV":0 "(":0   {help}:{tob'}     ")":0 "+ap":{-an}
+
+# Intransitive verbs
+
     |   "IV":0 "(":0    {sleep}:{war}   ")":0 "+caus":{-tisa}
-    |   "IV":0 "(":0    {come}:{peh}    ")":0 "+viin":0
-    |   "IV":0 "(":0    {come}:{peh}    ")":0 "+vidn":0
     |   "IV":0 "(":0    {exit}:{ee}     ")":0 "+caus":{-sa}
     |   "IV":0 "(":0    {descend}:{qaa} ")":0 "+caus":{-sa}
+
+# Irregular in ALL suffixed forms (so actually we treat the 
+# unsuffixed form as the irregular one)
+
+    |   "IV":0 "(":0    {come}:{peh}    ")":0 "+viin":0
+    |   "IV":0 "(":0    {come}:{peh}    ")":0 "+vidn":0
 ];
 
 define WithIrregulars(X) [
