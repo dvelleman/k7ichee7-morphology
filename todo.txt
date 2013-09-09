@@ -1,0 +1,18 @@
+When we allow for random CVC roots, we are doing the priority union at 
+the wrong point.  Etymologies involving real CVC transitive roots have
+priority over ones with fake CVC transitive roots --- but, for instance,
+etymologies involving real *noun* roots do *not* have priority over
+ones with fake CVC transitive roots.  (E.g. "nutz'u'uum" can either be
+"my hide" or a 1sg perfect of the fake transitive root TZ'U7.  Only
+the former etymology should be generated.)
+
+/i7a/ and /i7o/ sequences should contract to /ya7/ and /yo7/, not /a7/
+and /o7/.  (E.g. "jya'xeel", "tyo'neem")
+
+Nouns formed with the "aj" gentilic prefix have to be listed individually
+in the lexicon, and are treated as morphologically simple.  This is 
+probably wrong.
+
+We badly overgenerate plural adjectives from adjective roots.
+
+
