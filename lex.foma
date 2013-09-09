@@ -245,6 +245,7 @@ define IV [
             {enter}:{ok}
         |   {walk}:{b'ihn}
         |   {sleep}:{war}
+        |   {come}:{peht}
     ]
     ")":0
 ] | TEMP ;
@@ -367,7 +368,8 @@ define IrregularForms [
     |   "RTV":0 "(":0   {wash}:{ch'aj}    ")":0 "+ap":{-oman}
     |   "RTV":0 "(":0   {help}:{tob'}     ")":0 "+ap":{-an}
     |   "IV":0 "(":0    {sleep}:{war}   ")":0 "+caus":{-tisa}
-    |   "IV":0 "(":0    {come}:{pee}    ")":0 "+caus":{-tsa}
+    |   "IV":0 "(":0    {come}:{peh}    ")":0 "+viin":0
+    |   "IV":0 "(":0    {come}:{peh}    ")":0 "+vidn":0
     |   "IV":0 "(":0    {exit}:{ee}     ")":0 "+caus":{-sa}
     |   "IV":0 "(":0    {descend}:{qaa} ")":0 "+caus":{-sa}
 ];
@@ -483,12 +485,12 @@ define IVStem [
 
 define DTVStem [ DTVBase ];
 
-define VIIX [
+define VIIX WithIrregulars([
         IVStem              "+viif":{-ik}   %# 
     |   IVStem              "+viin":0
     |   POS    "+iv":{-i7}  "+viif":{-k}    %#
     |   POS    "+iv":{-i7}  "+viin":0       
-];
+]);
 
 define VIDX [
         IVStem "+vidf":{-oq} %#

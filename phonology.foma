@@ -72,7 +72,7 @@ define VowelLength [
 		e h -> ē,
 		i h -> ī,
 		o h -> ō,
-		u h -> ū  || _ S* C ] .o. # /h/ gives long vowels unaffected by
+		u h -> ū  || _ S* [C|.#.] ] .o. # /h/ gives long vowels unaffected by
 					# shortening
 	[ a -> ā, e -> ē, i -> ī, o -> ō, u -> ū || _ \V* L ] .o. [L -> 0] .o.
 	[ a -> ā, e -> ē, i -> ī, o -> ō, u -> ū || R "-" _ ] .o. [R -> 0] .o.
