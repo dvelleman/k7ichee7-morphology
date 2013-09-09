@@ -576,8 +576,8 @@ define Adjective [
     |       ADJ     "+intens":{-Vlaj}
     |       ADJ     "+pl":{-aq}
     |       ADJ     "+pl.f":{-a'q}  "#"
-    |       TEMP    "+f":{-ik}      "#"
-    |       TEMP
+    | [RTV|DTVStem] "+cp.stat":{-(V)tal}    ("+f":{-ik} "#")
+    |       TEMP                            ("+f":{-ik} "#")
     |       PERM    "+sg":{-ik}
     |       PERM    "+pl":{-aq}
     |       PERM    "+pl.f":{-a'q}  "#"
